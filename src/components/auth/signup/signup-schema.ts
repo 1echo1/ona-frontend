@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const signUpSchema = z.object({
-  username: z
+  email: z
     .string()
     .min(1,"Required")
     .email("Invalid email"),

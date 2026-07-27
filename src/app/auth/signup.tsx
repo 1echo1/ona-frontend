@@ -1,11 +1,11 @@
 import SignUp from "@/components/auth/signup/signup";
-import { View } from "react-native";
+import { ThemedView } from "@/components/themed-view";
 
 export default function SignUpScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+    <ThemedView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <SignUp width="80%" />
-    </View>
+    </ThemedView>
   );
 }
 

@@ -1,13 +1,18 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { useTheme } from "@/hooks/use-theme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Pressable } from "react-native";
 import OnaTextInputField from "../../ui/forms/ona-text-input-field/ona-text-input-field";
 import { LoginProps } from "./login-props";
 import loginSchema, { LoginFormData } from "./login-schema";
 
+
 export default function Login({ width }: LoginProps) {
+  const theme = useTheme();
 
   const {
     control,
@@ -34,18 +39,19 @@ export default function Login({ width }: LoginProps) {
   }
 
   return (
-    <View style={{ width: width}}>
-      <Text style={{ textAlign: "center" }}>{t("login.title")}</Text>
+    <ThemedView style={{ width: width}}>
+      <ThemedText style={{ textAlign: "center" }}>{t("login.title")}</ThemedText>
 
       <Controller
         control={control}
-        name="username"
+        name="email"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("login.username")}
+            placeholder={t("login.email")}
             value={value}
             onChangeText={onChange}
-            error={errors.username?.message}
+            error={errors.email?.message}
+            backgroundColor={theme.backgroundElement}
           />
         )}
       />
@@ -60,28 +66,29 @@ export default function Login({ width }: LoginProps) {
             onChangeText={onChange}
             secureTextEntry
             error={errors.password?.message}
+            backgroundColor={theme.backgroundElement}
           />
         )}
       />
 
       <Pressable onPress={onForgotPassword}>
-        <Text style={{ textAlign: "right", marginBottom: 10 }}>
+        <ThemedText style={{ textAlign: "right", marginBottom: 10 }}>
           {t("login.forgotPassword")}
-        </Text>
+        </ThemedText>
       </Pressable>
 
       <Button title={t("login.submit")} onPress={handleSubmit(onSubmit)} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-        <Text style={{}}>
+      <ThemedView style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+        <ThemedText>
           {t("login.newUser")}
-        </Text>
+        </ThemedText>
         <Pressable onPress={onSignUp}>
-          <Text style={{ color: '#3C9FFE', marginLeft: 4 }}>
+          <ThemedText style={{ color: '#3C9FFE', marginLeft: 4 }}>
             {t("login.signUp")}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 }

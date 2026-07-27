@@ -1,6 +1,6 @@
 export const en_login = {
   title: "UwU",
-  username: "Username",
+  username: "Email",
   password: "Password",
   submit: "Log in",
   forgotPassword: "Forgot your password?",

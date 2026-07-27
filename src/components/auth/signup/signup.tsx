@@ -1,13 +1,17 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { useTheme } from "@/hooks/use-theme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Pressable } from "react-native";
 import OnaTextInputField from "../../ui/forms/ona-text-input-field/ona-text-input-field";
 import { SignUpProps } from "./signup-props";
 import signUpSchema, { SignUpFormData } from "./signup-schema";
 
 export default function SignUp({ width }: SignUpProps) {
+  const theme = useTheme();
 
   const {
     control,
@@ -30,18 +34,19 @@ export default function SignUp({ width }: SignUpProps) {
   }
 
   return (
-    <View style={{ width: width}}>
-      <Text style={{ textAlign: "center" }}>{t("signup.title")}</Text>
+    <ThemedView style={{ width: width}}>
+      <ThemedText style={{ textAlign: "center" }}>{t("signup.title")}</ThemedText>
 
       <Controller
         control={control}
-        name="username"
+        name="email"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("signup.username")}
+            placeholder={t("signup.email")}
             value={value}
             onChangeText={onChange}
-            error={errors.username?.message}
+            error={errors.email?.message}
+            backgroundColor={theme.backgroundElement}
           />
         )}
       />
@@ -56,22 +61,24 @@ export default function SignUp({ width }: SignUpProps) {
             onChangeText={onChange}
             secureTextEntry
             error={errors.password?.message}
+            backgroundColor={theme.backgroundElement}
+
           />
         )}
       />
 
       <Button title={t("signup.submit")} onPress={handleSubmit(onSubmit)} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-        <Text style={{}}>
+      <ThemedView style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+        <ThemedText style={{}}>
           {t("signup.isUser")}
-        </Text>
+        </ThemedText>
         <Pressable onPress={onLoginPress}>
-          <Text style={{ color: '#3C9FFE', marginLeft: 4 }}>
+          <ThemedText style={{ color: '#3C9FFE', marginLeft: 4 }}>
             {t("signup.login")}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 }

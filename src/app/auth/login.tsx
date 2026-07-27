@@ -1,11 +1,11 @@
 import Login from "@/components/auth/login/login";
-import { View } from "react-native";
+import { ThemedView } from "@/components/themed-view";
 
 export default function LoginScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+    <ThemedView style={{ flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Login width="80%" />
-    </View>
+    </ThemedView>
   );
 }
 
