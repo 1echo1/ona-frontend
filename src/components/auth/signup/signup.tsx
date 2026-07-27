@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Pressable, Text, View } from "react-native";
-import OnaTextInputField from "../../ui/forms/ona-text-input-field";
+import OnaTextInputField from "../../ui/forms/ona-text-input-field/ona-text-input-field";
 import { SignUpProps } from "./signup-props";
 import signUpSchema, { SignUpFormData } from "./signup-schema";
 
