@@ -3,44 +3,46 @@ import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Pressable, Text, View } from "react-native";
-import OnaTextInputField from "../forms/ona-text-input-field";
-import { SignUpProps } from "./signup-props";
-import signUpSchema, { SignUpFormData } from "./signup-schema";
+import OnaTextInputField from "../../ui/forms/ona-text-input-field";
+import { LoginProps } from "./login-props";
+import loginSchema, { LoginFormData } from "./login-schema";
 
-export default function SignUp({ width }: SignUpProps) {
+export default function Login({ width }: LoginProps) {
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
 
   const { t } = useTranslation();
 
-  const onSubmit = (data: SignUpFormData) => {
+  const onSubmit = (data: LoginFormData) => {
     console.log(data);
   };
 
+  const onForgotPassword = () => {
+    console.log("Forgot password");
+  }
 
-
-  const onLoginPress = () => { 
-    router.replace("/auth/login");
+  const onSignUp = () => { 
+    router.replace("/auth/signup");
   }
 
   return (
     <View style={{ width: width}}>
-      <Text style={{ textAlign: "center" }}>{t("signup.title")}</Text>
+      <Text style={{ textAlign: "center" }}>{t("login.title")}</Text>
 
       <Controller
         control={control}
         name="username"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("signup.username")}
+            placeholder={t("login.username")}
             value={value}
             onChangeText={onChange}
             error={errors.username?.message}
@@ -53,7 +55,7 @@ export default function SignUp({ width }: SignUpProps) {
         name="password"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("signup.password")}
+            placeholder={t("login.password")}
             value={value}
             onChangeText={onChange}
             secureTextEntry
@@ -62,15 +64,21 @@ export default function SignUp({ width }: SignUpProps) {
         )}
       />
 
-      <Button title={t("signup.submit")} onPress={handleSubmit(onSubmit)} />
+      <Pressable onPress={onForgotPassword}>
+        <Text style={{ textAlign: "right", marginBottom: 10 }}>
+          {t("login.forgotPassword")}
+        </Text>
+      </Pressable>
+
+      <Button title={t("login.submit")} onPress={handleSubmit(onSubmit)} />
 
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
         <Text style={{}}>
-          {t("signup.isUser")}
+          {t("login.newUser")}
         </Text>
-        <Pressable onPress={onLoginPress}>
+        <Pressable onPress={onSignUp}>
           <Text style={{ color: '#3C9FFE', marginLeft: 4 }}>
-            {t("signup.login")}
+            {t("login.signUp")}
           </Text>
         </Pressable>
       </View>

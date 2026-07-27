@@ -1,4 +1,4 @@
-import SignUp from "@/components/signup/signup";
+import SignUp from "@/components/auth/signup/signup";
 import { View } from "react-native";
 
 export default function SignUpScreen() {

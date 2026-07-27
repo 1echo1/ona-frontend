@@ -1,4 +1,4 @@
-import Login from "@/components/login/login";
+import Login from "@/components/auth/login/login";
 import { View } from "react-native";
 
 export default function LoginScreen() {

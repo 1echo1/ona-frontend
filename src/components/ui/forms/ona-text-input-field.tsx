@@ -1,5 +1,5 @@
 import { Text, TextInput, View } from "react-native";
-import { isDarkText } from "../../../scripts/utils/textUtils";
+import { isDarkText } from "../../../../scripts/utils/textUtils";
 import { OnaTextInputFieldProps } from "./ona-text-input-field-prop";
 
 export default function OnaTextInputField({  
