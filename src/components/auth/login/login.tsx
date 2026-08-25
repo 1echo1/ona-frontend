@@ -31,11 +31,12 @@ export default function Login({ width }: LoginProps) {
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormData) => {
+    setLoginError(null);
     const result = await LoginRequest(data.email, data.password);
 
     if (result.success) {
       setAuth({ token: result.data.access_token, user: data.email });
-      setLoginError(null);
+      router.replace('/');
     } else {
       setLoginError(t(`login.errors.${result.errorCode}`));
     }
