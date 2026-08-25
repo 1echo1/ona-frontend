@@ -1,8 +1,11 @@
+import LoginRequest from "@/api/auth/login";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { useAuth } from "@/context/auth/authProvider";
 import { useTheme } from "@/hooks/use-theme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Pressable } from "react-native";
@@ -10,10 +13,10 @@ import OnaTextInputField from "../../ui/forms/ona-text-input-field/ona-text-inpu
 import { LoginProps } from "./login-props";
 import loginSchema, { LoginFormData } from "./login-schema";
 
-
 export default function Login({ width }: LoginProps) {
   const theme = useTheme();
-
+  const { setAuth } = useAuth();
+  
   const {
     control,
     handleSubmit,
@@ -25,9 +28,17 @@ export default function Login({ width }: LoginProps) {
   });
 
   const { t } = useTranslation();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    const result = await LoginRequest(data.email, data.password);
+
+    if (result.success) {
+      setAuth({ token: result.data.access_token, user: data.email });
+      setLoginError(null);
+    } else {
+      setLoginError(t(`login.errors.${result.errorCode}`));
+    }
   };
 
   const onForgotPassword = () => {
@@ -89,6 +100,11 @@ export default function Login({ width }: LoginProps) {
           </ThemedText>
         </Pressable>
       </ThemedView>
+      {loginError && (
+        <ThemedText style={{ color: 'red', textAlign: 'center', marginBottom: 10 }}>
+          {loginError}
+        </ThemedText>
+      )}
     </ThemedView>
   );
 }
