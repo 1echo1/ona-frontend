@@ -35,7 +35,7 @@ export default function Login({ width }: LoginProps) {
     const result = await LoginRequest(data.email, data.password);
 
     if (result.success) {
-      setAuth({ token: result.data.access_token, user: data.email });
+      setAuth({ token: result.data.access_token, user: data.email, user_id: "" });
       router.replace('/');
     } else {
       setLoginError(t(`login.errors.${result.errorCode}`));
@@ -101,6 +101,7 @@ export default function Login({ width }: LoginProps) {
           </ThemedText>
         </Pressable>
       </ThemedView>
+      
       {loginError && (
         <ThemedText style={{ color: 'red', textAlign: 'center', marginBottom: 10 }}>
           {loginError}

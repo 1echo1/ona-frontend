@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 type AuthState = {
     token: string | null;
     user: string | null;
+    user_id: string | null;
 }
 
 type AuthContextType = {
@@ -13,7 +14,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [auth, setAuth] = useState<AuthState>({ token: null, user: null });
+  const [auth, setAuth] = useState<AuthState>({ token: null, user: null, user_id: null });
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

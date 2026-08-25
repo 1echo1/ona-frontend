@@ -1,8 +1,10 @@
+import SignUpRequest from "@/api/auth/signup";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useTheme } from "@/hooks/use-theme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Pressable } from "react-native";
@@ -24,9 +26,17 @@ export default function SignUp({ width }: SignUpProps) {
   });
 
   const { t } = useTranslation();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
-  const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormData) => {
+     setLoginError(null);
+     const result = await SignUpRequest(data.email, data.password);
+ 
+     if (result.success) {
+       router.replace('/auth/login');
+     } else {
+       setLoginError(t(`login.errors.${result.errorCode}`));
+     }
   };
 
   const onLoginPress = () => { 
@@ -67,6 +77,21 @@ export default function SignUp({ width }: SignUpProps) {
         )}
       />
 
+      <Controller
+        control={control}
+        name="verify_password"
+        render={({ field: { onChange, value } }) => (
+          <OnaTextInputField
+            placeholder={t("signup.verify_password")}
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry
+            error={errors.verify_password?.message}
+            backgroundColor={theme.backgroundElement}
+          />
+        )}
+      />
+
       <Button title={t("signup.submit")} onPress={handleSubmit(onSubmit)} />
 
       <ThemedView style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
@@ -79,6 +104,11 @@ export default function SignUp({ width }: SignUpProps) {
           </ThemedText>
         </Pressable>
       </ThemedView>
+
+      {!errors.verify_password && loginError && (
+        <ThemedText style={{ color: 'red' }}>{loginError}</ThemedText>
+      )}
+
     </ThemedView>
   );
 }
