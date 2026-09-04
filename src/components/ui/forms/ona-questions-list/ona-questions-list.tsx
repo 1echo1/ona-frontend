@@ -1,4 +1,4 @@
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/style/theme/themed-view";
 import { OnaQuestionsListProps } from "./ona-questions-list.prop";
 
 export default function OnaQuestionsList({  

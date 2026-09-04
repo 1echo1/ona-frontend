@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/style/theme/themed-text";
+import { ThemedView } from "@/style/theme/themed-view";
 
 export default function HomeScreen() {
   return (

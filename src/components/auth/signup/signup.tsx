@@ -1,7 +1,7 @@
 import SignUpRequest from "@/api/auth/signup";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import { useTheme } from "@/hooks/use-theme";
+import { ThemedText } from "@/style/theme/themed-text";
+import { ThemedView } from "@/style/theme/themed-view";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useState } from "react";

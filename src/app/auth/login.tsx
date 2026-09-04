@@ -1,5 +1,5 @@
 import Login from "@/components/auth/login/login";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/style/theme/themed-view";
 
 export default function LoginScreen() {
   return (

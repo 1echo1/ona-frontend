@@ -1,5 +1,5 @@
 import SignUp from "@/components/auth/signup/signup";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/style/theme/themed-view";
 
 export default function SignUpScreen() {
   return (
