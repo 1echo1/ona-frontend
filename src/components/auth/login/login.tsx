@@ -2,7 +2,7 @@ import LoginRequest from "@/api/auth/login";
 import OnaButton from "@/components/ui/forms/ona-button/ona-button";
 import { useAuth } from "@/context/auth/authProvider";
 import { useTheme } from "@/hooks/use-theme";
-import { getFramedStyle } from '@/style/frames';
+import { getFramedStyle } from "@/style/frames";
 import { ThemedText } from "@/style/theme/themed-text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
@@ -16,10 +16,10 @@ import { LoginProps } from "./login-props";
 import loginSchema, { LoginFormData } from "./login-schema";
 
 export default function Login({ width }: LoginProps) {
-  const theme = useTheme();    
+  const theme = useTheme();
   const framedStyle = getFramedStyle(theme);
   const { setAuth } = useAuth();
-  
+
   const {
     control,
     handleSubmit,
@@ -38,8 +38,12 @@ export default function Login({ width }: LoginProps) {
     const result = await LoginRequest(data.email, data.password);
 
     if (result.success) {
-      setAuth({ token: result.data.access_token, user: data.email, user_id: "" });
-      router.replace('/');
+      setAuth({
+        token: result.data.access_token,
+        user: data.email,
+        user_id: "",
+      });
+      router.replace("/");
     } else {
       setLoginError(t(`login.errors.${result.errorCode}`));
     }
@@ -47,70 +51,78 @@ export default function Login({ width }: LoginProps) {
 
   const onForgotPassword = () => {
     console.log("Forgot password");
-  }
+  };
 
-  const onSignUp = () => { 
+  const onSignUp = () => {
     router.replace("/auth/signup");
-  }
+  };
 
   return (
     <AuthCard title={t("login.title")} width={width}>
+      <Controller
+        control={control}
+        name="email"
+        render={({ field: { onChange, value } }) => (
+          <OnaTextInputField
+            placeholder={t("login.email")}
+            value={value}
+            onChangeText={onChange}
+            error={errors.email?.message}
+            backgroundColor={theme.backgroundElement}
+          />
+        )}
+      />
 
-          <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, value } }) => (
-            <OnaTextInputField
-              placeholder={t("login.email")}
-              value={value}
-              onChangeText={onChange}
-              error={errors.email?.message}
-              backgroundColor={theme.backgroundElement}
-            />
-          )}
-        />
+      <Controller
+        control={control}
+        name="password"
+        render={({ field: { onChange, value } }) => (
+          <OnaTextInputField
+            placeholder={t("login.password")}
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry
+            error={errors.password?.message}
+            backgroundColor={theme.backgroundElement}
+          />
+        )}
+      />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, value } }) => (
-            <OnaTextInputField
-              placeholder={t("login.password")}
-              value={value}
-              onChangeText={onChange}
-              secureTextEntry
-              error={errors.password?.message}
-              backgroundColor={theme.backgroundElement}
-            />
-          )}
-        />
+      <Pressable onPress={onForgotPassword}>
+        <ThemedText
+          style={{ textAlign: "right", marginBottom: 10, color: theme.link }}
+        >
+          {t("login.forgotPassword")}
+        </ThemedText>
+      </Pressable>
 
-        <Pressable onPress={onForgotPassword}>
-          <ThemedText style={{ textAlign: "right", marginBottom: 10, color: theme.link }}>
-            {t("login.forgotPassword")}
+      <OnaButton title={t("login.submit")} onPress={handleSubmit(onSubmit)} />
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 10,
+          backgroundColor: "transparent",
+        }}
+      >
+        <ThemedText>{t("login.newUser")}</ThemedText>
+
+        <Pressable onPress={onSignUp}>
+          <ThemedText style={{ color: theme.link, marginLeft: 4 }}>
+            {t("login.signUp")}
           </ThemedText>
         </Pressable>
+      </View>
 
-        < OnaButton title={t("login.submit")} onPress={handleSubmit(onSubmit)} />
-
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor: 'transparent' }}>
-          <ThemedText>
-            {t("login.newUser")}
-          </ThemedText>
-
-          <Pressable onPress={onSignUp}>
-            <ThemedText style={{color: theme.link, marginLeft: 4 }}>
-              {t("login.signUp")}
-            </ThemedText>
-          </Pressable>
-        </View>
-        
-        {loginError && (
-          <ThemedText style={{ color: theme.error, textAlign: 'center', marginBottom: 10}}>
-            {loginError}
-          </ThemedText>
-        )}      
+      {loginError && (
+        <ThemedText
+          style={{ color: theme.error, textAlign: "center", marginBottom: 10 }}
+        >
+          {loginError}
+        </ThemedText>
+      )}
     </AuthCard>
-
   );
 }

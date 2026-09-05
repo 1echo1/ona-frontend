@@ -1,6 +1,6 @@
-import { useAuth } from '@/context/auth/authProvider';
-import { Redirect } from 'expo-router';
-import HomeScreen from './home';
+import { useAuth } from "@/context/auth/authProvider";
+import { Redirect } from "expo-router";
+import HomeScreen from "./home";
 
 export default function Index() {
   const { auth } = useAuth();
@@ -12,4 +12,3 @@ export default function Index() {
 
   return <HomeScreen />;
 }
-

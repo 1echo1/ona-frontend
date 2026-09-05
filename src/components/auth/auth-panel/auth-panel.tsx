@@ -11,10 +11,13 @@ export default function AuthCard({ title, width, children }: AuthCardProps) {
 
   return (
     <ThemedView style={{ width }}>
-      <ThemedText type="title" style={{ textAlign: "center", color: theme.text }}>
+      <ThemedText
+        type="title"
+        style={{ textAlign: "center", color: theme.text }}
+      >
         {title}
       </ThemedText>
-      
+
       <View style={[framedStyle.panel, { padding: 15, marginTop: 15 }]}>
         {children}
       </View>

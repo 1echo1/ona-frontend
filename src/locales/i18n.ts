@@ -12,15 +12,15 @@ const resources = {
 
 const getDeviceLanguage = () => {
   const locale =
-    Platform.OS === 'ios'
+    Platform.OS === "ios"
       ? NativeModules.SettingsManager.settings.AppleLocale ||
         NativeModules.SettingsManager.settings.AppleLanguages[0]
       : NativeModules.I18nManager.localeIdentifier;
-  return locale ? locale.split('_')[0] : 'en';
+  return locale ? locale.split("_")[0] : "en";
 };
 
 const initI18n = async () => {
-  const savedLanguage = 'en'; // WIP: To replace with prefered language from storage
+  const savedLanguage = "en"; // WIP: To replace with prefered language from storage
   const language = savedLanguage || getDeviceLanguage();
   i18n.use(initReactI18next).init({
     resources,

@@ -15,7 +15,7 @@ import { SignUpProps } from "./signup-props";
 import signUpSchema, { SignUpFormData } from "./signup-schema";
 
 export default function SignUp({ width }: SignUpProps) {
-  const theme = useTheme();    
+  const theme = useTheme();
   const framedStyle = getFramedStyle(theme);
 
   const {
@@ -32,26 +32,30 @@ export default function SignUp({ width }: SignUpProps) {
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const onSubmit = async (data: SignUpFormData) => {
-     setLoginError(null);
-     const result = await SignUpRequest(data.email, data.password);
- 
-     if (result.success) {
-       router.replace('/auth/login');
-     } else {
-       setLoginError(t(`login.errors.${result.errorCode}`));
-     }
+    setLoginError(null);
+    const result = await SignUpRequest(data.email, data.password);
+
+    if (result.success) {
+      router.replace("/auth/login");
+    } else {
+      setLoginError(t(`login.errors.${result.errorCode}`));
+    }
   };
 
-  const onLoginPress = () => { 
+  const onLoginPress = () => {
     router.replace("/auth/login");
-  }
+  };
 
   return (
-    <ThemedView style={{ width: width}}>
-      <ThemedText type="title" style={{ textAlign: "center",  color: theme.text }}>{t("signup.title")}</ThemedText>
+    <ThemedView style={{ width: width }}>
+      <ThemedText
+        type="title"
+        style={{ textAlign: "center", color: theme.text }}
+      >
+        {t("signup.title")}
+      </ThemedText>
 
-        <View style={[framedStyle.panel, { padding: 15, marginTop: 15 }]}>
-      
+      <View style={[framedStyle.panel, { padding: 15, marginTop: 15 }]}>
         <Controller
           control={control}
           name="email"
@@ -77,7 +81,6 @@ export default function SignUp({ width }: SignUpProps) {
               secureTextEntry
               error={errors.password?.message}
               backgroundColor={theme.backgroundElement}
-
             />
           )}
         />
@@ -97,13 +100,22 @@ export default function SignUp({ width }: SignUpProps) {
           )}
         />
 
-        <OnaButton title={t("signup.submit")} onPress={handleSubmit(onSubmit)} />
+        <OnaButton
+          title={t("signup.submit")}
+          onPress={handleSubmit(onSubmit)}
+        />
 
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10,  backgroundColor: 'transparent' }}>
-          <ThemedText>
-            {t("signup.isUser")}
-          </ThemedText>
-          
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+            backgroundColor: "transparent",
+          }}
+        >
+          <ThemedText>{t("signup.isUser")}</ThemedText>
+
           <Pressable onPress={onLoginPress}>
             <ThemedText style={{ color: theme.link, marginLeft: 4 }}>
               {t("signup.login")}
@@ -112,12 +124,17 @@ export default function SignUp({ width }: SignUpProps) {
         </View>
 
         {!errors.verify_password && loginError && (
-          <ThemedText style={{ color: theme.error ,  textAlign: 'center', marginBottom: 10}}>
+          <ThemedText
+            style={{
+              color: theme.error,
+              textAlign: "center",
+              marginBottom: 10,
+            }}
+          >
             {loginError}
           </ThemedText>
         )}
       </View>
-
     </ThemedView>
   );
 }

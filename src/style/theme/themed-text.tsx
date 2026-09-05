@@ -1,28 +1,42 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
+import { StyleSheet, Text, type TextProps } from "react-native";
 
-import { useTheme } from '@/hooks/use-theme';
-import { ThemeColor } from '@/style/colors';
-import { textSizes } from '@/style/tokens';
+import { useTheme } from "@/hooks/use-theme";
+import { ThemeColor } from "@/style/colors";
+import { textSizes } from "@/style/tokens";
 
 export type ThemedTextProps = TextProps & {
-  type?: 'micro' | 'small' | 'medium' | 'subtitle' | 'title' | 'large' | 'link' | 'linkPrimary' | 'code';
+  type?:
+    | "micro"
+    | "small"
+    | "medium"
+    | "subtitle"
+    | "title"
+    | "large"
+    | "link"
+    | "linkPrimary"
+    | "code";
   themeColor?: ThemeColor;
 };
 
-export function ThemedText({ style, type = 'medium', themeColor, ...rest }: ThemedTextProps) {
+export function ThemedText({
+  style,
+  type = "medium",
+  themeColor,
+  ...rest
+}: ThemedTextProps) {
   const theme = useTheme();
 
   return (
     <Text
       style={[
-        { color: theme[themeColor ?? 'text'] },
-        type === 'micro' && styles.micro,
-        type === 'small' && styles.small,
-        type === 'medium' && styles.medium,
-        type === 'subtitle' && styles.subtitle,
-        type === 'title' && styles.title,
-        type === 'large' && styles.large,
-        type === 'link' && styles.link,
+        { color: theme[themeColor ?? "text"] },
+        type === "micro" && styles.micro,
+        type === "small" && styles.small,
+        type === "medium" && styles.medium,
+        type === "subtitle" && styles.subtitle,
+        type === "title" && styles.title,
+        type === "large" && styles.large,
+        type === "link" && styles.link,
         style,
       ]}
       {...rest}

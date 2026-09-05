@@ -1,11 +1,11 @@
-import { ThemeColors } from '@/style/colors';
-import { borders } from '@/style/tokens';
-import { StyleSheet } from 'react-native';
+import { ThemeColors } from "@/style/colors";
+import { borders } from "@/style/tokens";
+import { StyleSheet } from "react-native";
 
 export function getFramedStyle(theme: ThemeColors) {
   return StyleSheet.create({
     outer: {
-      backgroundColor: theme.backgroundElement, 
+      backgroundColor: theme.backgroundElement,
       borderRadius: 14,
     },
     inner: {
@@ -30,7 +30,7 @@ export function getFramedStyle(theme: ThemeColors) {
       borderWidth: borders.thick,
       borderColor: theme.border,
       borderRadius: 20,
-      
+
       shadowColor: theme.border,
       shadowOffset: { width: 10, height: 2 },
       shadowOpacity: 0.35,
@@ -43,14 +43,13 @@ export function getFramedStyle(theme: ThemeColors) {
       borderWidth: borders.mid,
       borderColor: theme.border,
       borderRadius: 22,
-      
+
       shadowColor: theme.border,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
 
       elevation: 4,
-    }
+    },
   });
 }
-
