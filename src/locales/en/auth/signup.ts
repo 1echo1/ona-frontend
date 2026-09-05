@@ -1,5 +1,5 @@
 export const en_signup = {
-  title: "UwU",
+  title: "Sign Up",
   email: "Email",
   password: "Password",
   verifyPassword: "Verify Password",
