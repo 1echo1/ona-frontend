@@ -3,9 +3,9 @@ import { getFramedStyle } from "@/style/frames";
 import { ThemedText } from "@/style/theme/themed-text";
 import { ThemedView } from "@/style/theme/themed-view";
 import { View } from "react-native";
-import { AuthCardProps } from "./auth-panel-props";
+import { CardProps } from "./panel-props";
 
-export default function AuthCard({ title, width, children }: AuthCardProps) {
+export default function Card({ title, width, children }: CardProps) {
   const theme = useTheme();
   const framedStyle = getFramedStyle(theme);
 

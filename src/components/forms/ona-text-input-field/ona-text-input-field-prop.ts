@@ -1,3 +1,5 @@
+import { DimensionValue } from "react-native";
+
 export type OnaTextInputFieldProps = {
   label?: string;
   description?: string;
@@ -12,4 +14,6 @@ export type OnaTextInputFieldProps = {
   lines?: number;
   backgroundColor?: string;
   secureTextEntry?: boolean;
+  width?: DimensionValue;
+  numeric?: boolean;
 };

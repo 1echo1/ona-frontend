@@ -21,6 +21,8 @@ export default function OnaTextInputField({
   lines,
   backgroundColor,
   secureTextEntry,
+  width,
+  numeric,
 }: OnaTextInputFieldProps) {
   const theme = useTheme();
   const framedStyle = getFramedStyle(theme);
@@ -31,6 +33,7 @@ export default function OnaTextInputField({
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "transparent",
+        width: width,
       }}
     >
       {label && <ThemedText>{label}</ThemedText>}
@@ -40,6 +43,7 @@ export default function OnaTextInputField({
         <View style={framedStyle.bevelDark}>
           <View style={framedStyle.bevelLight}>
             <ThemedTextInput
+              keyboardType={numeric ? "number-pad" : "default"}
               editable={!disabled}
               placeholder={placeholder}
               value={value}

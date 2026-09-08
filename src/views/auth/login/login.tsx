@@ -1,7 +1,9 @@
-import SignUpRequest from "@/api/auth/signup";
-import OnaButton from "@/components/ui/forms/ona-button/ona-button";
+import LoginRequest from "@/api/auth/login";
+import OnaButton from "@/components/forms/ona-button/ona-button";
+import OnaTextInputField from "@/components/forms/ona-text-input-field/ona-text-input-field";
+import Card from "@/components/panel/panel";
+import { useAuth } from "@/context/auth/authProvider";
 import { useTheme } from "@/hooks/use-theme";
-import { getFramedStyle } from "@/style/frames";
 import { ThemedText } from "@/style/theme/themed-text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
@@ -9,21 +11,19 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Pressable, View } from "react-native";
-import OnaTextInputField from "../../ui/forms/ona-text-input-field/ona-text-input-field";
-import AuthCard from "../auth-panel/auth-panel";
-import { SignUpProps } from "./signup-props";
-import signUpSchema, { SignUpFormData } from "./signup-schema";
+import { LoginProps } from "./login-props";
+import loginSchema, { LoginFormData } from "./login-schema";
 
-export default function SignUp({ width }: SignUpProps) {
+export default function Login({ width }: LoginProps) {
   const theme = useTheme();
-  const framedStyle = getFramedStyle(theme);
+  const { setAuth } = useAuth();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
@@ -31,29 +31,38 @@ export default function SignUp({ width }: SignUpProps) {
   const { t } = useTranslation();
   const [loginError, setLoginError] = useState<string | null>(null);
 
-  const onSubmit = async (data: SignUpFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     setLoginError(null);
-    const result = await SignUpRequest(data.email, data.password);
+    const result = await LoginRequest(data.email, data.password);
 
     if (result.success) {
-      router.replace("/auth/login");
+      setAuth({
+        token: result.data.access_token,
+        user: data.email,
+        user_id: "",
+      });
+      router.replace("/");
     } else {
       setLoginError(t(`login.errors.${result.errorCode}`));
     }
   };
 
-  const onLoginPress = () => {
-    router.replace("/auth/login");
+  const onForgotPassword = () => {
+    console.log("Forgot password");
+  };
+
+  const onSignUp = () => {
+    router.replace("/auth/signup");
   };
 
   return (
-    <AuthCard title={t("login.title")} width={width}>
+    <Card title={t("login.title")} width={width}>
       <Controller
         control={control}
         name="email"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("signup.email")}
+            placeholder={t("login.email")}
             value={value}
             onChangeText={onChange}
             error={errors.email?.message}
@@ -67,7 +76,7 @@ export default function SignUp({ width }: SignUpProps) {
         name="password"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("signup.password")}
+            placeholder={t("login.password")}
             value={value}
             onChangeText={onChange}
             secureTextEntry
@@ -77,22 +86,15 @@ export default function SignUp({ width }: SignUpProps) {
         )}
       />
 
-      <Controller
-        control={control}
-        name="verify_password"
-        render={({ field: { onChange, value } }) => (
-          <OnaTextInputField
-            placeholder={t("signup.verifyPassword")}
-            value={value}
-            onChangeText={onChange}
-            secureTextEntry
-            error={errors.verify_password?.message}
-            backgroundColor={theme.backgroundElement}
-          />
-        )}
-      />
+      <Pressable onPress={onForgotPassword}>
+        <ThemedText
+          style={{ textAlign: "right", marginBottom: 10, color: theme.link }}
+        >
+          {t("login.forgotPassword")}
+        </ThemedText>
+      </Pressable>
 
-      <OnaButton title={t("signup.submit")} onPress={handleSubmit(onSubmit)} />
+      <OnaButton title={t("login.submit")} onPress={handleSubmit(onSubmit)} />
 
       <View
         style={{
@@ -103,26 +105,22 @@ export default function SignUp({ width }: SignUpProps) {
           backgroundColor: "transparent",
         }}
       >
-        <ThemedText>{t("signup.isUser")}</ThemedText>
+        <ThemedText>{t("login.newUser")}</ThemedText>
 
-        <Pressable onPress={onLoginPress}>
+        <Pressable onPress={onSignUp}>
           <ThemedText style={{ color: theme.link, marginLeft: 4 }}>
-            {t("signup.login")}
+            {t("login.signUp")}
           </ThemedText>
         </Pressable>
       </View>
 
-      {!errors.verify_password && loginError && (
+      {loginError && (
         <ThemedText
-          style={{
-            color: theme.error,
-            textAlign: "center",
-            marginBottom: 10,
-          }}
+          style={{ color: theme.error, textAlign: "center", marginBottom: 10 }}
         >
           {loginError}
         </ThemedText>
       )}
-    </AuthCard>
+    </Card>
   );
 }
