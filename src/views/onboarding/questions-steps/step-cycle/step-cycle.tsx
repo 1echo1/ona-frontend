@@ -3,18 +3,20 @@ import { useTheme } from "@/hooks/use-theme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { OnboardingMeasuresStepFormData } from "./step-cycle-schema";
+import onboardingCycleStepSchema, {
+  OnboardingCycleStepFormData,
+} from "./step-cycle-schema";
 
+import OnaDateInputField from "@/components/forms/ona-date-input-field/ona-date-input-field";
 import { View } from "react-native";
-import onboardingMeasuresStepSchema from "./step-cycle-schema";
 
-export default function StepMeasures() {
+export default function StepCycle() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<OnboardingMeasuresStepFormData>({
-    resolver: zodResolver(onboardingMeasuresStepSchema),
+  } = useForm<OnboardingCycleStepFormData>({
+    resolver: zodResolver(onboardingCycleStepSchema),
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
@@ -26,13 +28,27 @@ export default function StepMeasures() {
     <View>
       <Controller
         control={control}
-        name="weight"
+        name="conditions"
         render={({ field: { onChange, value } }) => (
           <OnaTextInputField
-            placeholder={t("onboarding.measures.weight")}
+            placeholder={t("onboarding.cycle.conditions")}
+            value={value}
+            onChangeText={onChange}
+            error={errors.conditions?.message}
+            backgroundColor={theme.backgroundElement}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="cycleLength"
+        render={({ field: { onChange, value } }) => (
+          <OnaTextInputField
+            placeholder={t("onboarding.cycle.cycleLength")}
             value={value?.toString() ?? ""}
             onChangeText={onChange}
-            error={errors.weight?.message}
+            error={errors.cycleLength?.message}
             backgroundColor={theme.backgroundElement}
             numeric
           />
@@ -41,15 +57,14 @@ export default function StepMeasures() {
 
       <Controller
         control={control}
-        name="height"
+        name="lastPeriod"
         render={({ field: { onChange, value } }) => (
-          <OnaTextInputField
-            placeholder={t("onboarding.measures.height")}
-            value={value?.toString() ?? ""}
-            onChangeText={onChange}
-            error={errors.weight?.message}
+          <OnaDateInputField
+            label={t("onboarding.cycle.lastPeriod")}
+            value={value}
+            onChange={onChange}
+            error={errors.lastPeriod?.message}
             backgroundColor={theme.backgroundElement}
-            numeric
           />
         )}
       />

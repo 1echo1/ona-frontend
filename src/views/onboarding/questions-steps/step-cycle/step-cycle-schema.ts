@@ -1,11 +1,13 @@
+import { dateSchema } from "@/general-schemas/date-schema";
 import { z } from "zod";
 
-const onboardingMeasuresStepSchema = z.object({
-  weight: z.number().min(0, "Required"),
-  height: z.number().min(0, "Required"),
+const onboardingCycleStepSchema = z.object({
+  conditions: z.string().min(1, "Required"),
+  cycleLength: z.number().min(0, "Required"),
+  lastPeriod: dateSchema,
 });
-export default onboardingMeasuresStepSchema;
+export default onboardingCycleStepSchema;
 
-export type OnboardingMeasuresStepFormData = z.infer<
-  typeof onboardingMeasuresStepSchema
+export type OnboardingCycleStepFormData = z.infer<
+  typeof onboardingCycleStepSchema
 >;

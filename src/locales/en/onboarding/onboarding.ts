@@ -9,4 +9,9 @@ export const en_oboarding = {
     weight: "Weight",
     height: "Height",
   },
+  cycle: {
+    conditions: "Conditions",
+    cycleLength: "Cycle Length",
+    lastPeriod: "Last Period",
+  },
 };

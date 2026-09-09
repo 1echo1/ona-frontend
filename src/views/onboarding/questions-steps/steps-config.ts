@@ -1,5 +1,6 @@
 import { Path } from "react-hook-form";
 import { OnboardingFormData } from "../onboarding-form-data";
+import StepCycle from "./step-cycle/step-cycle";
 import StepGeneral from "./step-general/step-general";
 import StepMeasures from "./step-measures/step-measures";
 
@@ -19,5 +20,10 @@ export const onboardingSteps: OnboardingStepConfig[] = [
     id: "measures",
     component: StepMeasures,
     fields: ["measures.weight", "measures.height"],
+  },
+  {
+    id: "cycle",
+    component: StepCycle,
+    fields: ["cycle.conditions", "cycle.cycleLength", "cycle.lastPeriod"],
   },
 ] as const;
