@@ -1,7 +1,11 @@
 import { Sex } from "@/constants/sex";
 
-export type StepGeneralData = {
+export type StepGeneralFormData = {
   name: string;
-  birthday: Date;
+  dateOfBirth: {
+    day?: number;
+    month?: number;
+    year?: number;
+  };
   sex: Sex;
 };

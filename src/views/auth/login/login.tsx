@@ -41,7 +41,7 @@ export default function Login({ width }: LoginProps) {
         user: data.email,
         user_id: "",
       });
-      router.replace("/");
+      router.replace("/onboarding/onboarding-questions");
     } else {
       setLoginError(t(`login.errors.${result.errorCode}`));
     }
