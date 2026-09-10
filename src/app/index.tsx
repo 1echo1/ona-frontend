@@ -7,7 +7,7 @@ export default function Index() {
   const isConnected = !!auth.token;
 
   if (!isConnected) {
-    return <Redirect href="/auth/login" />;
+    return <Redirect href="/onboarding/onboarding-questions" />;
   }
 
   return <HomeScreen />;

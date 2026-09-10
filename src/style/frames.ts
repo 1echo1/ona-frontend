@@ -24,6 +24,7 @@ export function getFramedStyle(theme: ThemeColors) {
       borderRadius: 13,
       paddingBottom: 2,
       paddingRight: 2,
+      overflow: "hidden",
     },
     panel: {
       backgroundColor: theme.altBackground,
@@ -32,8 +33,8 @@ export function getFramedStyle(theme: ThemeColors) {
       borderRadius: 20,
 
       shadowColor: theme.border,
-      shadowOffset: { width: 10, height: 2 },
-      shadowOpacity: 0.35,
+      shadowOffset: { width: 6, height: 6 },
+      shadowOpacity: 0.25,
       shadowRadius: 6,
 
       elevation: 6,

@@ -1,12 +1,11 @@
 import WaveBackground from "@/components/decorative/wave-background";
 import { ThemedView } from "@/style/theme/themed-view";
-import Login from "@/views/auth/login/login";
+import OnboardingQuestions from "@/views/onboarding/onboarding-questions";
 
-export default function LoginScreen() {
+export default function OnboardingQuestionsScreen() {
   return (
     <ThemedView style={{ flex: 1 }}>
       <WaveBackground />
-
       <ThemedView
         style={{
           flex: 1,
@@ -15,7 +14,7 @@ export default function LoginScreen() {
           backgroundColor: "transparent",
         }}
       >
-        <Login width="80%" />
+        <OnboardingQuestions width="80%" />
       </ThemedView>
     </ThemedView>
   );
